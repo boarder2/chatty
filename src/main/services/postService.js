@@ -59,7 +59,10 @@ angular.module('chatty')
                     if (data && data.error && data.code === 'ERR_INVALID_LOGIN') {
                         settingsService.clearCredentials();
                         postService.clearQueue();
-                    } else if (data && data.error && (data.code === 'ERR_BANNED' || data.code === 'ERR_NUKED')) {
+                    } else if (data && data.error && (data.code === 'ERR_BANNED' || data.code === 'ERR_NUKED' || data.code === 'ERR_SERVER')) {
+                        //TODO: Inform the user that they're banned
+                        //TODO: Inform the user that an error occurred and we're going to give up posting
+                        //If they're trying to reply to a nuked post, don't worry about it and just silently fail.
                         _.pull(postQueue, post);
                     } else {
                         lastTimeout = $timeout(function() {
